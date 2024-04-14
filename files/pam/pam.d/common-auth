@@ -1,0 +1,1 @@
+auth		required		pam_tally2.so	onerr=fail audit silent deny=5 unlock_time=900

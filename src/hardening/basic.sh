@@ -1,0 +1,138 @@
+#!/bin/bash
+# Basic Hardening is Some Configurations like FileSystem Settings, Disabling Hardware access, etc.
+
+# Disable Unused File Systems
+source "src/preload/preload.sh"
+
+fsdisable() {
+    echo "Removing & Disabling unused filesystems ... "
+    sleep 1
+    if [ -d /etc/modprobe.d ]; then
+        echo "install freevxfs /bin/true" > /etc/modprobe.d/install-freevxfs.conf
+        echo "install hfs /bin/true" > /etc/modprobe.d/install-hfs.conf
+        echo "install hfsplus /bin/true" > /etc/modprobe.d/install-hfsplus.conf
+        echo "install jffs2 /bin/true" > /etc/modprobe.d/install-jffs2.conf
+        echo "install squashfs /bin/true" > /etc/modprobe.d/install-squashfs.conf
+        echo "install udf /bin/true" > /etc/modprobe.d/install-udf.conf
+        echo "Done!"
+        return 0
+    fi
+}
+
+# Disable USB Storage Access from the Kernel and Userland
+usbdisable() {
+    echo "Disabling USB Mass-Storage Access from the Kernel and Userland ... "
+    sleep 2
+    echo "blacklist usb-stoage" >/etc/modprobe.d/10-blacklist-usb.conf
+    if ! [ -d "/etc/udev/rules.d" ]; then
+        mkdir -p "/etc/udev/rules.d"
+    fi
+    UDEVPATH="/etc/udev/rules.d/10-disable-usb.rules"
+    echo 'ACTION=="add", SUBSYSTEMS=="usb", TEST=="authorized_default", ATTR{authorized_default}="0"' >$UDEVPATH
+    echo "Done!"
+    return 0
+}
+
+# Disable tmpfs execution for users
+fstabhardening() {
+    echo "Disabling tmpfs Execution for users ... "
+    sleep 1
+    sed -i '/^tmpfs/d' /etc/fstab
+    echo "tmpfs     /dev/shm    tmpfs   defaults,noexec,nodev,nosuid,seclabel   0   0" >>/etc/fstab
+    echo "Done!"
+    return 0
+}
+
+# Enable Sudoers Logging
+sulogging() {
+    echo "Enabling Sudoers logfile ..."
+    sleep 1
+    
+    if ! [ -f "src/rollback/rollback_files/sudoers" ]; then
+        cp /etc/sudoers src/rollback/rollback_files/sudoers
+    fi 
+    
+    LFPATH="/var/log/sudoers.log"
+    if [ -f $LFPATH ]; then
+        echo "The log file is already exist!"
+        return 0
+    else
+        touch $LFPATH
+        echo "Defaults      logfile=$LFPATH" >> /etc/sudoers
+    fi
+    echo "Done!"
+    return 0
+}
+
+# Prevent users to modify or read another users files
+umsk() {
+    echo "Preventing users to modify or read another users files ..."
+    sleep 1
+    if ! [ -f ~/.profile ]; then
+        touch ~/.profile
+    fi
+    echo "umask 077" >> ~/.profile
+    echo "Done!"
+    return 0
+}
+
+pam() {
+    echo "Updating PAM modules configurations ... "
+    sleep 2
+    LOGINDEFPATH="/etc/login.defs"
+    LOGINDEF="files/pam/login.defs"
+    COMMACC="files/pam/pam.d/common-account"
+    COMMAUTH="files/pam/pam.d/common-auth"
+    COMMPASS="files/pam/pam.d/common-password"
+
+    # Min & Max Days for Changing Password
+    sed -i '/^PASS_MAX_DAYS*/d' $LOGINDEFPATH
+    sed -i '/^PASS_MIN_DAYS*/d' $LOGINDEFPATH
+    echo "PASS_MAX_DAYS	90
+PASS_MIN_DAYS	7" >> $LOGINDEFPATH
+
+    # Ensuring that the users don't set past 5 passwords
+    cat $COMMPASS >> /etc/pam.d/common-password
+
+    # lock account after failed password auth attempt
+    cat $COMMAUTH >> /etc/pam.d/common-auth
+    cat $COMMACC >> /etc/pam.d/common-account
+    echo "Done!"
+    return 0
+}
+
+nethardening() {
+
+    # Disable IPv6
+    echo "Disabling IPv6 ..."
+    sleep 1
+    echo "net.ipv6.conf.all.disable_ipv6 = 1" >/etc/sysctl.d/70-disable-ipv6.conf
+    echo "net.ipv6.conf.default.disable_ipv6 = 1" >/etc/sysctl.d/71-disable-ipv6.conf
+    echo "Done!"
+    # Disable Unused Transport Layers
+    echo "Disabling unused Transport Layers ..."
+    sleep 1
+    echo "install dccp /bin/false" >/etc/modprobe.d/disable-dccp.conf
+    echo "install sctp /bin/false" >/etc/modprobe.d/disable-sctp.conf
+    echo "install rds /bin/false" >/etc/modprobe.d/disable-rds.conf
+    echo "install tipc /bin/false" >/etc/modprobe.d/disable-tipc.conf
+    echo "Done!"
+    return 0
+    exit 0
+}
+
+ pw() {
+    # Password Quality 
+    echo "Changing Password Security Configurations ... "
+    sleep 2
+    PWPATH="/etc/security/pwquality.conf"
+    PWFILE="files/pwquality/pwquality"
+    cp $PWPATH "src/rollback/rollback_files/pwquality.conf"
+    sed -i '/^minlen/d' $PWPATH
+    sed -i '/^dcredit/d' $PWPATH
+    sed -i '/^ucredit/d' $PWPATH
+    sed -i '/^lcredit/d' $PWPATH
+    cat $PWFILE >> $PWPATH
+    echo "Done!"
+    return 0
+}
