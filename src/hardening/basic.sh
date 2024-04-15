@@ -12,12 +12,12 @@ fsdisable() {
     echo "Removing & Disabling unused filesystems ... "
     sleep 1
     if [ -d /etc/modprobe.d ]; then
-        echo "install freevxfs /bin/true" > /etc/modprobe.d/install-freevxfs.conf
-        echo "install hfs /bin/true" > /etc/modprobe.d/install-hfs.conf
-        echo "install hfsplus /bin/true" > /etc/modprobe.d/install-hfsplus.conf
-        echo "install jffs2 /bin/true" > /etc/modprobe.d/install-jffs2.conf
-        echo "install squashfs /bin/true" > /etc/modprobe.d/install-squashfs.conf
-        echo "install udf /bin/true" > /etc/modprobe.d/install-udf.conf
+        echo "install freevxfs /bin/true" >/etc/modprobe.d/install-freevxfs.conf
+        echo "install hfs /bin/true" >/etc/modprobe.d/install-hfs.conf
+        echo "install hfsplus /bin/true" >/etc/modprobe.d/install-hfsplus.conf
+        echo "install jffs2 /bin/true" >/etc/modprobe.d/install-jffs2.conf
+        echo "install squashfs /bin/true" >/etc/modprobe.d/install-squashfs.conf
+        echo "install udf /bin/true" >/etc/modprobe.d/install-udf.conf
         echo "Done!"
         return 0
     fi
@@ -53,15 +53,15 @@ sulogging() {
     sleep 1
     if ! [ -f "src/rollback/rollback_files/sudoers" ]; then
         cp /etc/sudoers src/rollback/rollback_files/sudoers
-    fi 
-    
+    fi
+
     LFPATH="/var/log/sudoers.log"
     if [ -f $LFPATH ]; then
         echo "The log file is already exist!"
         return 0
     else
         touch $LFPATH
-        echo "Defaults      logfile=$LFPATH" >> /etc/sudoers
+        echo "Defaults      logfile=$LFPATH" >>/etc/sudoers
     fi
     echo "Done!"
     return 0
@@ -74,7 +74,7 @@ umsk() {
     if ! [ -f ~/.profile ]; then
         touch ~/.profile
     fi
-    echo "umask 077" >> ~/.profile
+    echo "umask 077" >>~/.profile
     echo "Done!"
     return 0
 }
@@ -92,14 +92,14 @@ pam() {
     sed -i '/^PASS_MAX_DAYS*/d' $LOGINDEFPATH
     sed -i '/^PASS_MIN_DAYS*/d' $LOGINDEFPATH
     echo "PASS_MAX_DAYS	90
-PASS_MIN_DAYS	7" >> $LOGINDEFPATH
+PASS_MIN_DAYS	7" >>$LOGINDEFPATH
 
     # Ensuring that the users don't set past 5 passwords
-    cat $COMMPASS >> /etc/pam.d/common-password
+    cat $COMMPASS >>/etc/pam.d/common-password
 
     # lock account after failed password auth attempt
-    cat $COMMAUTH >> /etc/pam.d/common-auth
-    cat $COMMACC >> /etc/pam.d/common-account
+    cat $COMMAUTH >>/etc/pam.d/common-auth
+    cat $COMMACC >>/etc/pam.d/common-account
     echo "Done!"
     return 0
 }
@@ -124,8 +124,8 @@ nethardening() {
     exit 0
 }
 
- pw() {
-    # Password Quality 
+pw() {
+    # Password Quality
     echo "Changing Password Security Configurations ... "
     sleep 2
     PWPATH="/etc/security/pwquality.conf"
@@ -135,7 +135,14 @@ nethardening() {
     sed -i '/^dcredit/d' $PWPATH
     sed -i '/^ucredit/d' $PWPATH
     sed -i '/^lcredit/d' $PWPATH
-    cat $PWFILE >> $PWPATH
+    cat $PWFILE >>$PWPATH
     echo "Done!"
     return 0
 }
+
+coredumps() {
+    # Disable Core Dumps
+    COREDUMPPATH="/etc/security/limits.conf"
+    echo "* 		hard 		core 		0" >>$COREDUMPPATH
+}
+
