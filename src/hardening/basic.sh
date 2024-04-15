@@ -164,6 +164,8 @@ audit() {
     if [ -d $AUDITPATH ]; then
         mkdir -p $AUDITPATH
     fi
+    GRUBCFG="/etc/default/grub"
+    sed -i 's/\(GRUB_CMDLINE_LINUX=*.*\)"/ \1 audit=1 audit_backlog_limit=8192"/' $GRUBCFG    
     cat "files/auditd/record_date_time" >>$AUDITPATH/record_date_time.rules
     cat "files/auditd/record_initiation" >>$AUDITPATH/record_initiation.rules
     cat "files/auditd/record_login_logout" >>$AUDITPATH/record_login_logout.rules
