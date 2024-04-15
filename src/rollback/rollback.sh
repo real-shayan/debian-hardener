@@ -84,3 +84,6 @@ echo "Rolling Back Password Quality Configurations ..."
 sleep 1
 cp src/rollback/rollback_files/pwquality.conf /etc/security/pwquality.conf
 echo "Done!"
+
+# Uninstall Installed Packages by this script: 
+apt remove tripwire apparmor apparmor-utils
