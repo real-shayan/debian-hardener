@@ -153,7 +153,7 @@ persistent() {
     echo "Setting up Systemd for Persistent logging ..."
     sleep 2
     # Set Systemd journald logging to Persistent
-    sed -i '/^#Storage/d'
+    sed -i '/^#Storage/d' /etc/systemd/journald.conf
     echo "Storage=persistent" >>/etc/systemd/journald.conf
     echo "Done!"
 }
@@ -161,7 +161,7 @@ persistent() {
 audit() {
     echo "Applying Auditd Configurations ..."
     AUDITPATH="/etc/audit/rules.d"
-    if [ -d $AUDITPATH ]; then
+    if ! [ -d $AUDITPATH ]; then
         mkdir -p $AUDITPATH
     fi
     GRUBCFG="/etc/default/grub"

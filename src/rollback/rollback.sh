@@ -93,3 +93,17 @@ echo "Rolling Back Core Dumps Settings ..."
 sleep 1
 sed -i '$ d' /etc/security/limits.conf
 echo "Done!"
+
+# Rollback Systemd Journald Settings
+echo "Rolling Back Systemd Journald Settings to default ... "
+sleep 1
+sed -i '/^#Storage/d' /etc/systemd/journald.conf
+echo "#Storage=auto" >>/etc/systemd/journald.conf
+echo "Done!"
+
+# Rollback auitd cconfigurations
+AUDITPATH="/etc/audit/rules.d"
+echo "Rolling Back Auditd Configurations ..."
+sleep 1
+rm $AUDITPATH/*
+echo "Done!"
