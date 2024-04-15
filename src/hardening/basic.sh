@@ -141,12 +141,34 @@ pw() {
 }
 
 coredumps() {
+    echo "Disabling Core Dumps ..."
+    sleep 2
     # Disable Core Dumps
     COREDUMPPATH="/etc/security/limits.conf"
     echo "* 		hard 		core 		0" >>$COREDUMPPATH
+    echo "Done!"
 }
 
 persistent() {
+    echo "Setting up Systemd for Persistent logging ..."
+    sleep 2
     # Set Systemd journald logging to Persistent
-    sed -i '/^#Storage/d' ; echo "Storage=persistent" >> /etc/systemd/journald.conf
+    sed -i '/^#Storage/d'
+    echo "Storage=persistent" >>/etc/systemd/journald.conf
+    echo "Done!"
+}
+
+audit() {
+    echo "Applying Auditd Configurations ..."
+    AUDITPATH="/etc/audit/rules.d"
+    if [ -d $AUDITPATH ]; then
+        mkdir -p $AUDITPATH
+    fi
+    cat "files/auditd/record_date_time" >>$AUDITPATH/record_date_time.rules
+    cat "files/auditd/record_initiation" >>$AUDITPATH/record_initiation.rules
+    cat "files/auditd/record_login_logout" >>$AUDITPATH/record_login_logout.rules
+    cat "files/auditd/record_mac_controls" >>$AUDITPATH/record_mac_controls.rules
+    cat "files/auditd/record_networking" >>$AUDITPATH/record_networking.rules
+    cat "files/record_user_group" >>$AUDITPATH/record_user_group.rules
+    echo "Done!"
 }
