@@ -4,6 +4,10 @@
 # Disable Unused File Systems
 source "src/preload/preload.sh"
 
+if ! [ -d "src/rollback/rollback_files" ]; then
+    mkdir -p "src/rollback/rollback_files"
+fi
+
 fsdisable() {
     echo "Removing & Disabling unused filesystems ... "
     sleep 1
@@ -47,7 +51,6 @@ fstabhardening() {
 sulogging() {
     echo "Enabling Sudoers logfile ..."
     sleep 1
-    
     if ! [ -f "src/rollback/rollback_files/sudoers" ]; then
         cp /etc/sudoers src/rollback/rollback_files/sudoers
     fi 
