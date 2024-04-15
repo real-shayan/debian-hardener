@@ -36,6 +36,9 @@ sulogging
 umsk
 nethardening
 pw
+coredumps
+persistent
+audit
 echo "Done!"  ;;
 -r | --rollback) sh -c src/rollback/rollback.sh ;;
 *)
