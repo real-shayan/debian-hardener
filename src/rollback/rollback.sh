@@ -87,3 +87,9 @@ echo "Done!"
 
 # Uninstall Installed Packages by this script: 
 apt remove tripwire apparmor apparmor-utils
+
+# Enable Core Dumps
+echo "Rolling Back Core Dumps Settings ..."
+sleep 1
+sed -i '$ d' /etc/security/limits.conf
+echo "Done!"
