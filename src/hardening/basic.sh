@@ -146,3 +146,7 @@ coredumps() {
     echo "* 		hard 		core 		0" >>$COREDUMPPATH
 }
 
+persistent() {
+    # Set Systemd journald logging to Persistent
+    sed -i '/^#Storage/d' ; echo "Storage=persistent" >> /etc/systemd/journald.conf
+}
