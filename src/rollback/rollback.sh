@@ -12,18 +12,21 @@ clear
 # Rollback FS
 echo "Rolling Back File System Hardening ..."
 sleep 1
-rm /etc/modprobe.d/install-*
+if [ -f "/etc/modprobe.d/install-hfs.conf" ]; then
+    rm /etc/modprobe.d/install-*
+else
+    echo "It's already Rolled Back! Ignoring ..."
+fi
 echo "Done!"
 
 
 # Enabling USB Storage Access
 echo "Rolling Back USB Mass-Storage Hardening ..."
 sleep 1
-if [ -f /etc/modprobe.d/10-blacklist-usb ]; then
+if [ -f /etc/modprobe.d/10-blacklist-usb.conf ]; then
     rm /etc/modprobe.d/10-blacklist-usb.conf
     rm /etc/udev/rules.d/10-disable-usb.rules
     echo "Done!"
-    return 0
 fi
 
 # Rollback fstab
@@ -39,7 +42,9 @@ if [ -f "src/rollback/rollback_files/sudoers" ]; then
 fi
 echo "Flushing sudoer logs"
 sleep 1
-rm /var/log/sudoers.log
+if [ -f "/var/log/sudoers.log" ]; then
+    rm /var/log/sudoers.log
+fi
 echo "Done!"
 
 # Rollback Umask
