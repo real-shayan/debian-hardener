@@ -39,6 +39,7 @@ pw
 coredumps
 persistent
 audit
+ungrouped
 echo "Done!"  ;;
 -r | --rollback) sh -c src/rollback/rollback.sh ;;
 *)
