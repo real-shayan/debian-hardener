@@ -18,12 +18,12 @@ ifDebian() {
 
 # Check if required packages are installed
 ifInstalled() {
-    if [[ $(dpkg --list | awk '$1=="ii" && /tripwire|apparmor|apparmor-utils|auditd/') ]]; then
+    if [[ $(dpkg --list | awk '$1=="ii" && /tripwire|apparmor|apparmor-utils|auditd|tcpd syslog-ng libpam-pwquality/') ]]; then
         echo "# Installing Dependencies ... "
         echo "# This should be done, Don't be worry, It's safe."
         sleep 4
         apt update
         apt upgrade
-        apt install auditd tripwire apparmor apparmor-utils ; clear
+        apt install auditd tripwire apparmor apparmor-utils tcpd syslog-ng libpam-pwquality ; clear
     fi
 }
