@@ -165,7 +165,7 @@ audit() {
         mkdir -p $AUDITPATH
     fi
     GRUBCFG="/etc/default/grub"
-    sed -i 's/\(GRUB_CMDLINE_LINUX=*.*\)"/ \1 audit=1 audit_backlog_limit=8192"/' $GRUBCFG    
+    sed -i 's/\(GRUB_CMDLINE_LINUX=*.*\)"/ \1 audit=1 audit_backlog_limit=8192"/' $GRUBCFG
     cat "files/auditd/record_date_time" >>$AUDITPATH/record_date_time.rules
     cat "files/auditd/record_initiation" >>$AUDITPATH/record_initiation.rules
     cat "files/auditd/record_login_logout" >>$AUDITPATH/record_login_logout.rules
@@ -174,4 +174,10 @@ audit() {
     cat "files/auditd/record_user_group" >>$AUDITPATH/record_user_group.rules
     cat "files/auditd/record_dac_edit" >>$AUDITPATH/record_dac_edit.rules
     echo "Done!"
+}
+
+ungrouped() {
+    # Ungrouped files should be assigned to 'root' group. It's very safe and no need to revert/rollback.
+    GROUP='root'
+    df --local -P | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -ignore_readdir_race -nogroup -print 2>/dev/null | xargs chgrp "$GROUP"
 }
