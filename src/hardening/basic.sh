@@ -172,6 +172,5 @@ audit() {
     cat "files/auditd/record_mac_controls" >>$AUDITPATH/record_mac_controls.rules
     cat "files/auditd/record_networking" >>$AUDITPATH/record_networking.rules
     cat "files/auditd/record_user_group" >>$AUDITPATH/record_user_group.rules
-    cat "files/auditd/record_dac_edit" >>$AUDITPATH/record_dac_edit.rules
     echo "Done!"
 }
