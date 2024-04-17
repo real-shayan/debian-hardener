@@ -178,6 +178,9 @@ audit() {
 
 ungrouped() {
     # Ungrouped files should be assigned to 'root' group. It's very safe and no need to revert/rollback.
+    echo "Assigning group to ungrouped files ..."
+    sleep 1
     GROUP='root'
     df --local -P | awk '{if (NR!=1) print $6}' | xargs -I '{}' find '{}' -xdev -ignore_readdir_race -nogroup -print 2>/dev/null | xargs chgrp "$GROUP"
+    echo "Done!"
 }
