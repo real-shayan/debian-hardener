@@ -87,7 +87,10 @@ fi
 # Rollback PW Settings
 echo "Rolling Back Password Quality Configurations ..."
 sleep 1
-cp src/rollback/rollback_files/pwquality.conf /etc/security/pwquality.conf
+PWSRC="src/rollback/rollback_files/pwquality.conf"
+if [ -f $PWSRC ]; then
+    cp src/rollback/rollback_files/pwquality.conf /etc/security/pwquality.conf
+fi
 echo "Done!"
 
 # Uninstall Installed Packages by this script: 
