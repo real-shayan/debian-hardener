@@ -41,6 +41,7 @@ persistent
 audit
 ungrouped
 unowned
+icmpredirect
 echo "Done!"  ;;
 -r | --rollback) sh -c src/rollback/rollback.sh ;;
 *)
