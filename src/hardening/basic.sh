@@ -203,10 +203,8 @@ net.ipv4.conf.default.send_redirects = 0
 net.ipv6.conf.all.send_redirects = 0
 net.ipv6.conf.default.send_redirects = 0
 " >> $SYSCTLPATH
-    sysctl -w net.ipv4.conf.all.send_redirects = 0
-    sysctl -w net.ipv4.conf.default.send_redirects = 0
-    sysctl -w net.ipv6.conf.all.send_redirects = 0
-    sysctl -w net.ipv6.conf.default.send_redirects = 0
+    sysctl -w net.ipv4.conf.all.send_redirects=0
+    sysctl -w net.ipv4.conf.default.send_redirects=0
     sysctl -w net.ipv4.route.flush=1 >/dev/null
     echo "Done!"
 }
