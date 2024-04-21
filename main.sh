@@ -43,6 +43,7 @@ ungrouped
 unowned
 icmpredirect
 martian
+logsperm
 echo "Done!"  ;;
 -r | --rollback) sh -c src/rollback/rollback.sh ;;
 *)

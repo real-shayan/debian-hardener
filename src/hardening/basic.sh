@@ -218,3 +218,11 @@ net.ipv4.conf.default.log_martians=1" >> $SYSCTLPATH
     sysctl -w net.ipv4.conf.default.log_martians=1
     echo "Done!"
 }
+
+logsperm() {
+    # Log files permission
+    echo "Changing log files permissions ..."
+    sleep 1
+    LOGDIR="/var/log"
+    chmod -R 0640 "$LOGDIR/*"
+}
