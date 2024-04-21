@@ -198,13 +198,23 @@ icmpredirect() {
     echo "Disabling ICMP Send Redirects ..."
     sleep 1
     SYSCTLPATH="/etc/sysctl.d/99-sysctl.conf"
-    echo "net.ipv4.conf.all.send_redirects = 0
-net.ipv4.conf.default.send_redirects = 0
-net.ipv6.conf.all.send_redirects = 0
-net.ipv6.conf.default.send_redirects = 0
-" >> $SYSCTLPATH
+    echo "net.ipv4.conf.all.send_redirects=0
+net.ipv4.conf.default.send_redirects=0
+net.ipv6.conf.all.send_redirects=0
+net.ipv6.conf.default.send_redirects=0" >> $SYSCTLPATH
     sysctl -w net.ipv4.conf.all.send_redirects=0
     sysctl -w net.ipv4.conf.default.send_redirects=0
     sysctl -w net.ipv4.route.flush=1 >/dev/null
+    echo "Done!"
+}
+
+martian() {
+    echo "Enabling log martians ..."
+    sleep 1
+    SYSCTLPATH="/etc/sysctl.d/99-sysctl.conf"
+    echo "net.ipv4.conf.all.log_martians=1
+net.ipv4.conf.default.log_martians=1" >> $SYSCTLPATH
+    sysctl -w net.ipv4.conf.all.log_martians=1
+    sysctl -w net.ipv4.conf.default.log_martians=1
     echo "Done!"
 }

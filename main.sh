@@ -42,6 +42,7 @@ audit
 ungrouped
 unowned
 icmpredirect
+martian
 echo "Done!"  ;;
 -r | --rollback) sh -c src/rollback/rollback.sh ;;
 *)
