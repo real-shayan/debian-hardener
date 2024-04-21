@@ -226,3 +226,16 @@ logsperm() {
     LOGDIR="/var/log"
     chmod -R 0640 "$LOGDIR/*"
 }
+
+sshdperm() {
+    # sshd_config file permission
+    SSHDCONF="/etc/ssh/sshd_config"
+    SSHDPERM=600
+    SSHDUSER='root'
+    SSHDGROUP='root'
+    echo "Fixing sshd_config file permission ..."
+    sleep 1
+    chown "$SSHDUSER":"$SSHDGROUP" "$SSHDCONF"
+    chmod 600 $SSHDCONF 
+    echo "Done!"
+}

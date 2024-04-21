@@ -44,6 +44,7 @@ unowned
 icmpredirect
 martian
 logsperm
+sshdperm
 echo "Done!"  ;;
 -r | --rollback) sh -c src/rollback/rollback.sh ;;
 *)
