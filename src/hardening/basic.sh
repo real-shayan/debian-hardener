@@ -176,6 +176,7 @@ audit() {
     cat "files/auditd/record_sudoers_edit" >>$AUDITPATH/audit.rules
     cat "files/auditd/record_failed_access_file" >>$AUDITPATH/audit.rules
     cat "files/auditd/record_successful_mounts" >>$AUDITPATH/audit.rules
+    cat "files/auditd/record_file_deletion" >>$AUDITPATH/audit.rules
     echo "Done!"
 }
 
