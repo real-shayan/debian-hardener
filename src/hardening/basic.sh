@@ -174,6 +174,7 @@ audit() {
     cat "files/auditd/record_user_group" >>$AUDITPATH/record_user_group.rules
     cat "files/auditd/record_dac_edit" >>$AUDITPATH/audit.rules
     cat "files/auditd/record_sudoers_edit" >>$AUDITPATH/audit.rules
+    cat "files/auditd/record_failed_access_file" >>$AUDITPATH/audit.rules
     echo "Done!"
 }
 
