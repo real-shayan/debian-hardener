@@ -224,7 +224,7 @@ logsperm() {
     echo "Changing log files permissions ..."
     sleep 1
     LOGDIR="/var/log"
-    chmod -R 0640 "$LOGDIR/*"
+    chmod -R 0640 "$LOGDIR"
 }
 
 sshdperm() {
