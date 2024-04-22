@@ -20,7 +20,7 @@ Installation:
 1. Clone This Repo:
 
 ```
-$ git clone https://github.com/real-shayan/irancell-hardener
+$ git clone https://github.com/real-shayan/debian-hardener
 ```
 
 2. Run the script:
