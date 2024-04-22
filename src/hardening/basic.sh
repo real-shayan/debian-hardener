@@ -177,7 +177,7 @@ audit() {
     cat "files/auditd/record_failed_access_file" >>$AUDITPATH/audit.rules
     cat "files/auditd/record_successful_mounts" >>$AUDITPATH/audit.rules
     cat "files/auditd/record_file_deletion" >>$AUDITPATH/audit.rules
-    cat "-w /var/log/auth.log -p wa -k" >>$AUDITPATH/audit.rules # Record Sudo Usage
+    cat "files/auditd/record_sudo_usage" >>$AUDITPATH/audit.rules
     cat "files/auditd/record_kernel_modules" >>$AUDITPATH/audit.rules 
     echo "Done!"
 }
