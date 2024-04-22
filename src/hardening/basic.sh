@@ -239,3 +239,39 @@ sshdperm() {
     chmod 600 $SSHDCONF 
     echo "Done!"
 }
+
+sshconfs() {
+    # sshd_config rules
+    SSHDCONF="/etc/ssh/sshd_config"
+    echo "Enabling Public-Key only authentication ..."
+    sleep 1
+    sed -i '/^Pubkey/d' $SSHDCONF
+    echo "PubkeyAuthentication yes" >> $SSHDCONF
+    echo "Done!"
+
+    echo "Disabling Password Authentication ..."
+    sleep 1
+    sed -i '/^PasswordAuthentication/d' $SSHDCONF
+    echo "PasswordAuthentication no" >> $SSHDCONF
+    echo "Done!"
+
+    echo "Disabling Kbd Interactive Authentication ..."
+    sleep 1
+    sed -i '/^KbdInteracti/d' $SSHDCONF
+    echo "KbdInteractiveAuthentication no" >> $SSHDCONF
+    echo "Done!"
+
+    echo "Disabling Kerbereos, ChallengeResponse, HostBased and GSSAPI Authentication ..."
+    sleep 2
+    sed -i '/^KerberosAuth/d' $SSHDCONF
+    sed -i '/^ChallengeRespon/d' $SSHDCONF
+    sed -i '/^HostBasedAuth/d' $SSHDCONF
+    sed -i '/^GSSAPIAuth/d' $SSHDCONF
+    sed -i '/^GSSAPIKeyEx/d' $SSHDCONF
+    echo "KerberosAuthentication no
+ChallengeResponseAuthentication no
+HostbasedAuthentication no
+GSSAPIAuthentication no
+GSSAPIKeyExchange no" >> $SSHDCONF
+    echo "Done!"
+}
