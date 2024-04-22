@@ -127,6 +127,7 @@ sed -i '/^GSSAPIAuth/d' $SSHDCONF
 sed -i '/^GSSAPIKeyEx/d' $SSHDCONF
 sed -i '/^PasswordAuthentication/d' $SSHDCONF
 sed -i '/^Pubkey/d' $SSHDCONF
+sed -i '/^KbdInt/d' $SSHDCONF
 echo "PubkeyAuthentication no
 PasswordAuthentication yes" >> $SSHDCONF
 echo "Done!"
