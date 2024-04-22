@@ -46,6 +46,7 @@ martian
 logsperm
 sshdperm
 sshconfs
+crons
 echo "Done!"  ;;
 -r | --rollback) sh -c src/rollback/rollback.sh ;;
 *)

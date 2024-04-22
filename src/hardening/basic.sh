@@ -281,3 +281,15 @@ GSSAPIAuthentication no
 GSSAPIKeyExchange no" >> $SSHDCONF
     echo "Done!"
 }
+
+crons() {
+    # Crontab files Permissions 
+    echo "Changing Crontab files permissions ..."
+    sleep 2 
+    chmod 600 /etc/crontab
+    chmod 700 /etc/cron.hourly
+    chmod 700 /etc/cron.daily
+    chmod 700 /etc/cron.weekly
+    chmod 700 /etc/cron.monthly
+    echo "Done!"
+}
