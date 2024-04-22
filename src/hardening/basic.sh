@@ -225,13 +225,13 @@ net.ipv4.conf.default.log_martians=1" >> $SYSCTLPATH
     echo "Done!"
 }
 
-logsperm() {
-    # Log files permission
-    echo "Changing log files permissions ..."
-    sleep 1
-    LOGDIR="/var/log"
-    chmod -R 0640 "$LOGDIR"
-}
+# logsperm() {
+#    # Log files permission
+#    echo "Changing log files permissions ..."
+#    sleep 1
+#    LOGDIR="/var/log"
+#    chmod -R 0640 "$LOGDIR"
+# }
 
 sshdperm() {
     # sshd_config file permission

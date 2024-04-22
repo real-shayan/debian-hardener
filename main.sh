@@ -43,7 +43,6 @@ ungrouped
 unowned
 icmpredirect
 martian
-logsperm
 sshdperm
 sshconfs
 crons
