@@ -24,6 +24,6 @@ ifInstalled() {
         sleep 4
         apt update
 #        apt upgrade
-        apt install auditd tripwire apparmor apparmor-utils tcpd syslog-ng libpam-pwquality ; clear
+        apt install auditd apparmor apparmor-utils tcpd syslog-ng libpam-pwquality ; clear
     fi
 }
