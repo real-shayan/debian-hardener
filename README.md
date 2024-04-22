@@ -28,6 +28,13 @@ $ git clone https://github.com/real-shayan/irancell-hardener
 ```
 $ ./main.sh
 ```
+
+3. After doing changes, Restart the openssh service: 
+
+```
+# systemctl restart sshd
+```
+
 That's it!
 
 
