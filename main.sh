@@ -16,8 +16,8 @@ source $SRCPATH/advanced.sh
 
 # Main Options
 case $1 in
--v | --version) echo "Irancell-Hardener-v0.1" ;;
--h | --help) echo "Welcome to Irancell Hardener. With this script, you can secure your debian destribution.
+-v | --version) echo "Debian-Hardener-v0.1" ;;
+-h | --help) echo "Welcome to Debian Hardener. With this script, you can secure your debian destribution.
 
 Usage: 
     -b | --basic         - Secure the Basic things

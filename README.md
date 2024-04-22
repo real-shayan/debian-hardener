@@ -1,11 +1,11 @@
-# Irancell Hardener (BETA)
+# Debian Hardener (BETA)
 
 This Script will automatically secure Debian 12 (Bookworm)   
 Note: This is currently in Work-in-Stage, Only Basic things can be apply. 
 
 ```bash
  ./main.sh --help
-Welcome to Irancell Hardener. With this script, you can secure your debian destribution.
+Welcome to Debian Hardener. With this script, you can secure your debian destribution.
 
 Usage:
     -b | --basic         - Secure the Basic things
