@@ -23,7 +23,7 @@ ifInstalled() {
         echo "# This should be done, Don't be worry, It's safe."
         sleep 4
         apt update
-        apt upgrade
+#        apt upgrade
         apt install auditd tripwire apparmor apparmor-utils tcpd syslog-ng libpam-pwquality ; clear
     fi
 }
