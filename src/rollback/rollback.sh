@@ -115,3 +115,18 @@ echo "Rolling Back Auditd Configurations ..."
 sleep 1
 rm $AUDITPATH/*
 echo "Done!"
+
+# Rollback sshd_config
+SSHDCONF="/etc/ssh/sshd_config"
+echo "Rolling Back SSH Configurations ..."
+sleep 3
+sed -i '/^KerberosAuth/d' $SSHDCONF
+sed -i '/^ChallengeRespon/d' $SSHDCONF
+sed -i '/^HostBasedAuth/d' $SSHDCONF
+sed -i '/^GSSAPIAuth/d' $SSHDCONF
+sed -i '/^GSSAPIKeyEx/d' $SSHDCONF
+sed -i '/^PasswordAuthentication/d' $SSHDCONF
+sed -i '/^Pubkey/d' $SSHDCONF
+echo "PubkeyAuthentication no
+PasswordAuthentication yes" >> $SSHDCONF
+echo "Done!"
