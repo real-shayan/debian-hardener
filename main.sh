@@ -45,6 +45,7 @@ icmpredirect
 martian
 logsperm
 sshdperm
+sshdconfs
 echo "Done!"  ;;
 -r | --rollback) sh -c src/rollback/rollback.sh ;;
 *)
