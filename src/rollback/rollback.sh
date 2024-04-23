@@ -1,5 +1,5 @@
 #!/bin/bash
-# RollBack Feature for Irancell Hardener
+# RollBack Feature for Debian Hardener
 # Note: This is under maintain for improvement, but stil works.
 
 # Should be Run as Root

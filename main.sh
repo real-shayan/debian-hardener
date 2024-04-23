@@ -49,7 +49,7 @@ crons
 echo "Done!"  ;;
 -r | --rollback) sh -c src/rollback/rollback.sh ;;
 *)
-    echo "Irancell-Hardener - a Simple Script for making the debian more Secure. 
+    echo "Debian-Hardener - a Simple Script for making the debian more Secure. 
 Invalid option. use --help for more details."
     ;;
 esac
